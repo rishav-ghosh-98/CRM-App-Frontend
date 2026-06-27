@@ -1,0 +1,36 @@
+/* Layout styles */
+body {
+  margin: 0;
+  background: #f5f7fb;
+}
+
+.layout {
+  display: flex;
+  min-height: 100vh;
+}
+
+.main-content {
+  flex: 1;
+  margin-left: 250px;
+}
+
+.page-content {
+  padding: 25px;
+}body {
+  margin: 0;
+  background: #f5f7fb;
+}
+
+.layout {
+  display: flex;
+  min-height: 100vh;
+}
+
+.main-content {
+  flex: 1;
+  margin-left: 250px;
+}
+
+.page-content {
+  padding: 25px;
+}
