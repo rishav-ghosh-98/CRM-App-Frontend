@@ -45,7 +45,7 @@ const LeadManagement = () => {
         </div>
         <div className="lead-header-actions">
           <span className={`status status-${lead.status.toLowerCase().replaceAll(" ", "-")}`}>{lead.status}</span>
-          <button className="edit-button" type="button">Edit details</button>
+          <button className="edit-button" type="button" onClick={() => navigate(`/leads/${id}/edit`)}>Edit details</button>
         </div>
       </div>
 
@@ -89,7 +89,7 @@ const LeadManagement = () => {
 
           <div className="detail-footer">
             <button className="secondary-button" type="button" onClick={() => navigate("/leads")}>Return to lead list</button>
-            <button className="edit-button" type="button">Edit details</button>
+            <button className="edit-button" type="button" onClick={() => navigate(`/leads/${id}/edit`)}>Edit details</button>
           </div>
         </section>
 

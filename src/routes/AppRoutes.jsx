@@ -6,7 +6,7 @@ import Leads from "../pages/Leads";
 import AddLead from "../pages/AddLead";
 import SalesAgents from "../pages/SalesAgents";
 import Reports from "../pages/Reports";
-
+import EditLeads from "../components/EditLeads";
 function AppRoutes() {
   return (
     <BrowserRouter>
@@ -15,6 +15,7 @@ function AppRoutes() {
           <Route index element={<Dashboard />} />
           <Route path="leads" element={<Leads />} />
           <Route path="leads/:id" element={<LeadManagement />} />
+          <Route path="leads/:id/edit" element={<EditLeads />} />
           <Route path="add-lead" element={<AddLead />} />
           <Route path="agents" element={<SalesAgents />} />
           <Route path="reports" element={<Reports />} />
