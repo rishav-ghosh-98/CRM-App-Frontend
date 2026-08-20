@@ -5,4 +5,5 @@ export const ENDPOINTS = {
   products: "/products",
   orders: "/orders",
   categories: "/categories",
+  abc: "/abc"
 };
