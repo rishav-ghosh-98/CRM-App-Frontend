@@ -1,36 +1,35 @@
-/* Layout styles */
 body {
   margin: 0;
   background: #f5f7fb;
 }
 
 .layout {
-  display: flex;
+  width: 100%;
   min-height: 100vh;
+}
+
+.layout-body {
+  display: flex;
+  width: min(1280px, 100%);
+  min-height: calc(100vh - 70px);
+  margin: 0 auto;
 }
 
 .main-content {
   flex: 1;
-  margin-left: 250px;
+  min-width: 0;
 }
 
 .page-content {
-  padding: 25px;
-}body {
-  margin: 0;
-  background: #f5f7fb;
+  padding: 32px;
 }
 
-.layout {
-  display: flex;
-  min-height: 100vh;
-}
+@media (max-width: 700px) {
+  .layout-body {
+    flex-direction: column;
+  }
 
-.main-content {
-  flex: 1;
-  margin-left: 250px;
-}
-
-.page-content {
-  padding: 25px;
+  .page-content {
+    padding: 20px;
+  }
 }

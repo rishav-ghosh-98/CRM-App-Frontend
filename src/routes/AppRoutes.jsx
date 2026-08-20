@@ -1,8 +1,7 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-
 import Layout from "../components/Layout/Layout";
-
 import Dashboard from "../pages/Dashboard";
+import LeadManagement from "../pages/LeadManagement.";
 import Leads from "../pages/Leads";
 import AddLead from "../pages/AddLead";
 import SalesAgents from "../pages/SalesAgents";
@@ -15,6 +14,7 @@ function AppRoutes() {
         <Route path="/" element={<Layout />}>
           <Route index element={<Dashboard />} />
           <Route path="leads" element={<Leads />} />
+          <Route path="leads/:id" element={<LeadManagement />} />
           <Route path="add-lead" element={<AddLead />} />
           <Route path="agents" element={<SalesAgents />} />
           <Route path="reports" element={<Reports />} />
