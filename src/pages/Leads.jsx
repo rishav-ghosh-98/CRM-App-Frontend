@@ -1,7 +1,6 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { getLeads } from "../api/leadApi";
-import { FaArrowLeft } from "react-icons/fa";
 import "./Leads.css";
 
 const Leads = () => {
@@ -21,16 +20,16 @@ const Leads = () => {
  return (
     <div className="leads-page">
       <div className="lead-management-header">
-        <h1>Lead Overview</h1>
+        <div>
+          <button className="text-back-button list-back-button" onClick={() => navigate("/")}>
+            <span aria-hidden="true">←</span>
+            <span>Back to dashboard</span>
+          </button>
+          <h1>Lead Overview</h1>
+        </div>
         <button className="add-lead-button" onClick={() => navigate("/add-lead")}>Add New Lead</button>
       </div>
       <div className="lead-layout">
-        <aside className="lead-sidebar">
-          <button className="back-button" onClick={() => navigate("/")}>
-            <FaArrowLeft className="back-arrow" />
-            <span>Back to Dashboard</span>
-          </button>
-        </aside>
         <section className="lead-details-card" aria-label="Lead list">
           <div className="lead-controls">
             <label>Status <select defaultValue=""><option value="">All statuses</option><option>New</option><option>Qualified</option><option>Proposal Sent</option></select></label>

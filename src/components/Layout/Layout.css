@@ -10,9 +10,8 @@ body {
 
 .layout-body {
   display: flex;
-  width: min(1280px, 100%);
+  width: 100%;
   min-height: calc(100vh - 70px);
-  margin: 0 auto;
 }
 
 .main-content {
@@ -21,6 +20,10 @@ body {
 }
 
 .page-content {
+  width: 100%;
+  max-width: 1280px;
+  box-sizing: border-box;
+  margin: 0 auto;
   padding: 32px;
 }
 
