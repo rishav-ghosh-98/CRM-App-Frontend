@@ -1,0 +1,83 @@
+.page-content:has(> div > form) {
+  max-width: 760px;
+}
+
+.page-content:has(> div > form) > div:first-child {
+  margin-bottom: 8px;
+  color: #2563eb;
+  font-size: 0.75rem;
+  font-weight: 800;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.page-content:has(> div > form) > div:nth-child(2) {
+  padding: clamp(20px, 4vw, 36px);
+  border: 1px solid #e2e8f0;
+  border-radius: 18px;
+  background: #ffffff;
+  box-shadow: 0 16px 40px rgba(15, 23, 42, 0.08);
+}
+
+.page-content:has(> div > form) form {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 20px;
+}
+
+.page-content:has(> div > form) form > div {
+  display: flex;
+  min-width: 0;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.page-content:has(> div > form) form label {
+  color: #475569;
+  font-size: 0.78rem;
+  font-weight: 800;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.page-content:has(> div > form) form input,
+.page-content:has(> div > form) form select {
+  width: 100%;
+  min-height: 46px;
+  padding: 11px 13px;
+  border: 1px solid #cbd5e1;
+  border-radius: 10px;
+  background: #f8fafc;
+  color: #0f172a;
+  font: inherit;
+  font-size: 0.95rem;
+  outline: none;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease, background 0.2s ease;
+}
+
+.page-content:has(> div > form) form input::placeholder {
+  color: #94a3b8;
+}
+
+.page-content:has(> div > form) form input:focus,
+.page-content:has(> div > form) form select:focus {
+  border-color: #2563eb;
+  background: #ffffff;
+  box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.14);
+}
+
+@media (max-width: 560px) {
+  .page-content:has(> div > form) {
+    padding-top: 16px;
+  }
+
+  .page-content:has(> div > form) > div:nth-child(2) {
+    padding: 20px 16px;
+    border-radius: 14px;
+  }
+
+  .page-content:has(> div > form) form {
+    grid-template-columns: 1fr;
+    gap: 16px;
+  }
+}
