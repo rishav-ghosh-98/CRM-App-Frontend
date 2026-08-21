@@ -1,11 +1,12 @@
 import { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useSearchParams } from "react-router-dom";
 import { getLeads } from "../api/leadApi";
 import { getSalesAgents } from "../api/salesAgentApi";
 import "./Leads.css";
 
 const Leads = () => {
   const navigate = useNavigate();
+  const [searchParams] = useSearchParams();
   const [leads, setLeads] = useState([]);
   const [agents, setAgents] = useState([]);
   const [selectedAgent, setSelectedAgent] = useState("");
@@ -17,7 +18,7 @@ const Leads = () => {
     "Proposal Sent",
     "Closed",
   ];
-  const [selectedStatus, setSelectedStatus] = useState("");
+  const [selectedStatus, setSelectedStatus] = useState(searchParams.get("status") || "");
   useEffect(() => {
     const fetchData = async () => {
       try {
