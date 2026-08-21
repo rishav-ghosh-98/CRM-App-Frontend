@@ -6,7 +6,7 @@ import "./Leads.css";
 
 const Leads = () => {
   const navigate = useNavigate();
-  const [searchParams] = useSearchParams();
+  const [searchParams, setSearchParams] = useSearchParams();
   const [leads, setLeads] = useState([]);
   const [agents, setAgents] = useState([]);
   const [selectedAgent, setSelectedAgent] = useState("");
@@ -88,7 +88,18 @@ const Leads = () => {
               Status{" "}
               <select
                 value={selectedStatus}
-                onChange={(e) => setSelectedStatus(e.target.value)}
+                onChange={(e) => {
+                  const value = e.target.value;
+                  setSelectedStatus(value);
+
+                  const nextParams = new URLSearchParams(searchParams);
+                  if (value) {
+                    nextParams.set("status", value);
+                  } else {
+                    nextParams.delete("status");
+                  }
+                  setSearchParams(nextParams);
+                }}
               >
                 <option value="">All statuses</option>
                 {statusOptions.map((stat) => (
