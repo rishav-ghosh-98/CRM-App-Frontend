@@ -347,13 +347,47 @@
 }
 
 .secondary-button {
+  min-height: 44px;
   padding: 12px 18px;
   border: 1px solid #cbd5e1;
   border-radius: 10px;
-  background: white;
+  background: #ffffff;
   color: #334155;
   font-weight: 700;
   cursor: pointer;
+  transition: border-color 0.2s ease, background 0.2s ease, color 0.2s ease;
+}
+
+.secondary-button:hover {
+  border-color: #93c5fd;
+  background: #eff6ff;
+  color: #1d4ed8;
+}
+
+.secondary-button:focus-visible,
+.edit-button:focus-visible,
+.text-back-button:focus-visible {
+  outline: 3px solid #bfdbfe;
+  outline-offset: 2px;
+}
+
+.edit-button {
+  min-height: 44px;
+  padding: 12px 18px;
+  border: 0;
+  border-radius: 10px;
+  background: #2563eb;
+  color: #ffffff;
+  font: inherit;
+  font-weight: 800;
+  cursor: pointer;
+  transition: background 0.2s ease, box-shadow 0.2s ease, transform 0.2s ease;
+}
+
+.edit-button:hover:not(:disabled) {
+  background: #1d4ed8;
+  box-shadow: 0 8px 18px rgba(37, 99, 235, 0.2);
+  transform: translateY(-1px);
 }
 
 .edit-lead-form {
@@ -396,13 +430,19 @@
   font-weight: 500;
   letter-spacing: 0;
   text-transform: none;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease, background 0.2s ease;
 }
 
 .edit-field input:focus,
 .edit-field select:focus {
-  outline: 2px solid #93c5fd;
-  outline-offset: 1px;
   border-color: #2563eb;
+  background: #ffffff;
+  box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.14);
+  outline: none;
+}
+
+.edit-field input::placeholder {
+  color: #94a3b8;
 }
 
 .form-error {
@@ -490,5 +530,9 @@
   .secondary-button,
   .detail-footer .edit-button {
     flex: 1 1 100%;
+  }
+
+  .edit-form-grid {
+    gap: 14px;
   }
 }

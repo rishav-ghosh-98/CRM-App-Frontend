@@ -5,6 +5,7 @@ import { createLead } from "../api/leadApi";
 import "./AddLead.css";
 
 const AddLead = () => {
+  const navigate = useNavigate();
   const [salesAgents, setSalesAgents] = useState([]);
   const sources = [
     "Website",
@@ -14,6 +15,8 @@ const AddLead = () => {
     "Email",
     "Other",
   ];
+  const statuses = ["New", "Contacted", "Qualified", "Proposal Sent", "Closed"];
+  const priorities = ["High", "Medium", "Low"];
   const [formData, setFormData] = useState({
     name: "",
     source: "",
@@ -28,8 +31,7 @@ const AddLead = () => {
     const getAgents = async () => {
       try {
         const response = await getSalesAgents();
-        setSalesAgents(response.data);
-        console.log(response.data);
+        setSalesAgents(response.data?.agents);
       } catch (error) {
         setError(error.response?.data?.error || "Failed to fetch Agents.");
       }
@@ -42,6 +44,28 @@ const AddLead = () => {
       ...prev,
       [name]: value,
     }));
+  };
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    const leadData = {
+      name: formData.name,
+      source: formData.source,
+      ...(formData.salesAgent && { salesAgent: formData.salesAgent }),
+      status: formData.status,
+      tags: formData.tags
+        .split(",")
+        .map((tag) => tag.trim()),
+      priority: formData.priority,
+      timeToClose: Number(formData.timeToClose),
+    };
+    try {
+      await createLead(leadData);
+      navigate("/leads");
+    } catch (error) {
+      setError(
+        error.response?.data?.error || "Failed to create lead.",
+      );
+    }
   };
   if (error) {
     return (
@@ -61,7 +85,7 @@ const AddLead = () => {
     <>
       <div>Add Lead Page</div>
       <div>
-        <form>
+        <form onSubmit={handleSubmit}>
           <div>
             <label>Lead Name</label>
 
@@ -87,7 +111,68 @@ const AddLead = () => {
                 </option>
               ))}
             </select>
+            <label>Select Agent</label>
+            <select
+              name="salesAgent"
+              value={formData.salesAgent}
+              onChange={handleChange}
+            >
+              <option value="">Select an option</option>
+              {salesAgents.map((agent) => (
+                <option key={agent.id} value={agent.id}>
+                  {agent.name}
+                </option>
+              ))}
+            </select>
+            <label>Lead Status</label>
+            <select
+              name="status"
+              value={formData.status}
+              onChange={handleChange}
+            >
+              <option value="">Select an option</option>
+              {statuses.map((stat) => (
+                <option key={stat} value={stat}>
+                  {stat}
+                </option>
+              ))}
+            </select>
+            <label>Lead Priority</label>
+            <select
+              name="priority"
+              value={formData.priority}
+              onChange={handleChange}
+            >
+              <option value="">Select an option</option>
+              {priorities.map((prior) => (
+                <option key={prior} value={prior}>
+                  {prior}
+                </option>
+              ))}
+            </select>
+            <label>
+              Tags
+              <input
+                type="text"
+                placeholder="e.g. hot, enterprise, follow-up"
+                name="tags"
+                value={formData.tags}
+                onChange={handleChange}
+              />
+            </label>
+            <label>
+              Time to close
+              <input
+                type="number"
+                placeholder="Enter days to close"
+                name="timeToClose"
+                value={formData.timeToClose}
+                onChange={handleChange}
+                min="1"
+              />
+            </label>
           </div>
+          <button type="submit">Create Lead</button>
         </form>
       </div>
     </>
