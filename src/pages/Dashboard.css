@@ -335,3 +335,41 @@
   padding-bottom: 0;
   border-bottom: 0;
 }
+
+@media (max-width: 860px) {
+  .dashboard-overview,
+  .recent-leads {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .recent-leads button:last-child {
+    grid-column: 1 / -1;
+  }
+}
+
+@media (max-width: 560px) {
+  .dashboard-overview,
+  .recent-leads,
+  .dashboard-status-list {
+    grid-template-columns: 1fr;
+  }
+
+  .recent-leads button:last-child {
+    grid-column: auto;
+  }
+
+  .overview-card,
+  .recent-leads button {
+    min-height: 112px;
+    padding: 16px;
+  }
+
+  .dashboard-filter-actions {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .dashboard-add-button {
+    grid-column: 1 / -1;
+  }
+}

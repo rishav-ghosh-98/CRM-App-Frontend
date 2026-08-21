@@ -87,6 +87,24 @@
   border-bottom: 1px solid #e5e7eb;
 }
 
+@media (max-width: 560px) {
+  .lead-controls {
+    display: grid;
+    grid-template-columns: 1fr;
+  }
+
+  .lead-controls label,
+  .lead-controls select {
+    width: 100%;
+  }
+
+  .lead-controls label {
+    align-items: stretch;
+    flex-direction: column;
+    gap: 6px;
+  }
+}
+
 .lead-controls label {
   display: flex;
   align-items: center;
