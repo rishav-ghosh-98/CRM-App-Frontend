@@ -105,7 +105,7 @@ const Leads = () => {
               >
                 <option value="">All agents</option>
                 {agents.map((agent) => (
-                  <option key={agent._id} value={agent._id}>
+                  <option key={agent.id} value={agent.id}>
                     {agent.name}
                   </option>
                 ))}
