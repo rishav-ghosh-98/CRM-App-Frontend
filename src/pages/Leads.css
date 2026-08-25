@@ -254,6 +254,93 @@
   align-items: start;
 }
 
+.lead-comments-card {
+  grid-column: 1;
+  min-width: 0;
+  padding: 28px;
+  border: 1px solid #e2e8f0;
+  border-radius: 16px;
+  background: #ffffff;
+  box-shadow: 0 16px 36px rgba(15, 35, 63, 0.07);
+}
+
+.comments-list {
+  display: grid;
+  gap: 12px;
+  padding-top: 22px;
+}
+
+.comment-item {
+  padding: 16px;
+  border-left: 3px solid #2563eb;
+  border-radius: 0 10px 10px 0;
+  background: #f8fafc;
+}
+
+.comment-meta {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.comment-meta strong {
+  color: #0f172a;
+  font-size: 0.9rem;
+}
+
+.comment-meta time {
+  color: #94a3b8;
+  font-size: 0.76rem;
+}
+
+.comment-item p {
+  margin-top: 8px;
+  color: #475569;
+  font-size: 0.92rem;
+  line-height: 1.6;
+  overflow-wrap: anywhere;
+}
+
+.comment-form {
+  display: grid;
+  gap: 10px;
+  margin-top: 24px;
+  padding-top: 22px;
+  border-top: 1px solid #e2e8f0;
+}
+
+.comment-form label {
+  color: #475569;
+  font-size: 0.78rem;
+  font-weight: 800;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.comment-form textarea {
+  width: 100%;
+  resize: vertical;
+  padding: 12px 13px;
+  border: 1px solid #cbd5e1;
+  border-radius: 10px;
+  background: #f8fafc;
+  color: #0f172a;
+  font: inherit;
+  font-size: 0.95rem;
+  outline: none;
+}
+
+.comment-form textarea:focus {
+  border-color: #2563eb;
+  background: #ffffff;
+  box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.14);
+}
+
+.comment-form .edit-button {
+  justify-self: end;
+}
+
 .lead-management-page .lead-details-card {
   padding: 28px;
   box-shadow: 0 16px 40px rgba(15, 23, 42, 0.08);
@@ -488,6 +575,10 @@
   .lead-detail-layout {
     grid-template-columns: 1fr;
   }
+
+  .lead-comments-card {
+    grid-column: auto;
+  }
 }
 
 @media (max-width: 640px) {
@@ -499,6 +590,20 @@
   .lead-header-actions {
     width: 100%;
     justify-content: space-between;
+  }
+
+  .lead-comments-card {
+    padding: 18px;
+  }
+
+  .comment-meta {
+    align-items: flex-start;
+    flex-direction: column;
+    gap: 4px;
+  }
+
+  .comment-form .edit-button {
+    width: 100%;
   }
 
   .lead-management-page .lead-details-card {

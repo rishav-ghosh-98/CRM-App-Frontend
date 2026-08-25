@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
-import { getLeadsById } from "../api/leadApi";
+import { createComment, getComments, getLeadsById } from "../api/leadApi";
 import { FaArrowLeft } from "react-icons/fa";
 import Loader from "../components/Loader";
 import "./Leads.css";
@@ -9,6 +9,11 @@ const LeadManagement = () => {
   const navigate = useNavigate();
   const { id } = useParams();
   const [lead, setLead] = useState(null);
+  const [comments, setComments] = useState([]);
+  const [commentText, setCommentText] = useState("");
+  const [commentsLoading, setCommentsLoading] = useState(true);
+  const [commentError, setCommentError] = useState("");
+  const [isAddingComment, setIsAddingComment] = useState(false);
   const [error, setError] = useState("");
 
   useEffect(() => {
@@ -19,10 +24,44 @@ const LeadManagement = () => {
       } catch (err) {
         setError(err.response?.data?.error || "Failed to fetch lead.");
       }
+
+      try {
+        const response = await getComments(id);
+        setComments(Array.isArray(response.data) ? response.data : []);
+      } catch (err) {
+        setCommentError(err.response?.data?.error || "Failed to fetch comments.");
+      } finally {
+        setCommentsLoading(false);
+      }
     };
 
     fetchLeads();
   }, [id]);
+
+  const handleCommentSubmit = async (event) => {
+    event.preventDefault();
+    const trimmedComment = commentText.trim();
+    if (!trimmedComment) {
+      setCommentError("Comment text is required.");
+      return;
+    }
+
+    setCommentError("");
+    setIsAddingComment(true);
+    try {
+      const authorId = lead.salesAgent?._id || lead.salesAgent?.id;
+      const response = await createComment(id, {
+        commentText: trimmedComment,
+        ...(authorId ? { author: authorId } : {}),
+      });
+      setComments((currentComments) => [...currentComments, response.data]);
+      setCommentText("");
+    } catch (err) {
+      setCommentError(err.response?.data?.error || "Failed to add comment.");
+    } finally {
+      setIsAddingComment(false);
+    }
+  };
 
   if (error) {
     return <div className="leads-page"><p className="empty-leads">{error}</p></div>;
@@ -92,6 +131,55 @@ const LeadManagement = () => {
             <button className="secondary-button" type="button" onClick={() => navigate("/leads")}>Return to lead list</button>
             <button className="edit-button" type="button" onClick={() => navigate(`/leads/${id}/edit`)}>Edit details</button>
           </div>
+        </section>
+
+        <section className="lead-comments-card" aria-label="Lead comments">
+          <div className="detail-card-heading">
+            <div>
+              <p className="page-eyebrow">Activity</p>
+              <h2>Comments</h2>
+            </div>
+            <span className="lead-id">{comments.length} updates</span>
+          </div>
+
+          {commentsLoading ? (
+            <Loader />
+          ) : comments.length ? (
+            <div className="comments-list">
+              {comments.map((comment) => (
+                <article className="comment-item" key={comment.id}>
+                  <div className="comment-meta">
+                    <strong>{comment.author || "Unknown author"}</strong>
+                    <time dateTime={comment.createdAt}>
+                      {new Date(comment.createdAt).toLocaleString()}
+                    </time>
+                  </div>
+                  <p>{comment.commentText}</p>
+                </article>
+              ))}
+            </div>
+          ) : (
+            <p className="empty-leads">No comments have been added yet.</p>
+          )}
+
+          <form className="comment-form" onSubmit={handleCommentSubmit}>
+            <label htmlFor="lead-comment">Add a comment</label>
+            <textarea
+              id="lead-comment"
+              value={commentText}
+              onChange={(event) => {
+                setCommentText(event.target.value);
+                setCommentError("");
+              }}
+              placeholder="Write an update about this lead..."
+              rows="4"
+              required
+            />
+            {commentError && <p className="form-error" role="alert">{commentError}</p>}
+            <button className="edit-button" type="submit" disabled={isAddingComment}>
+              {isAddingComment ? <Loader /> : "Add comment"}
+            </button>
+          </form>
         </section>
 
         <aside className="lead-side-panel">
