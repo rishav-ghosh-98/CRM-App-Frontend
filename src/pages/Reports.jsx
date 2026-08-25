@@ -11,7 +11,7 @@ import {
   Tooltip,
 } from "chart.js";
 import { getLeads } from "../api/leadApi";
-import { getLastWeekReport } from "../api/reportApi";
+import { getLastWeekReport, getPipelineReport } from "../api/reportApi";
 import Loader from "../components/Loader";
 import { FaArrowLeft } from "react-icons/fa";
 import "./Reports.css";
@@ -25,8 +25,10 @@ const Reports = () => {
   const navigate = useNavigate();
   const [leads, setLeads] = useState([]);
   const [lastWeekLeads, setLastWeekLeads] = useState([]);
+  const [pipelineCount, setPipelineCount] = useState(null);
   const [error, setError] = useState("");
   const [lastWeekError, setLastWeekError] = useState("");
+  const [pipelineError, setPipelineError] = useState("");
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
@@ -39,7 +41,10 @@ const Reports = () => {
       }
 
       try {
-        const lastWeekResponse = await getLastWeekReport();
+        const [lastWeekResponse, pipelineResponse] = await Promise.all([
+          getLastWeekReport(),
+          getPipelineReport(),
+        ]);
         setLastWeekLeads(
           (Array.isArray(lastWeekResponse.data) ? lastWeekResponse.data : []).map(
             (lead) => ({
@@ -52,9 +57,17 @@ const Reports = () => {
             }),
           ),
         );
+        setPipelineCount(
+          pipelineResponse.data?.totalLeadsInPipeline ??
+            pipelineResponse.data?.totalLeadsInPipeLine ??
+            0,
+        );
       } catch (err) {
         setLastWeekError(
           err.response?.data?.error || "Failed to fetch last-week report.",
+        );
+        setPipelineError(
+          err.response?.data?.error || "Failed to fetch pipeline report.",
         );
       } finally {
         setLoading(false);
@@ -143,7 +156,7 @@ const Reports = () => {
               <p className="page-eyebrow">Pipeline overview</p>
               <h2>Closed and in pipeline</h2>
             </div>
-            <strong>{leads.length} total leads</strong>
+            <strong>{pipelineError ? pipelineError : `${pipelineCount ?? 0} in pipeline`}</strong>
           </div>
           <div className="report-chart report-doughnut-chart">
             <Doughnut
