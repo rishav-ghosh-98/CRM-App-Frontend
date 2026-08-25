@@ -7,6 +7,7 @@ import AddLead from "../pages/AddLead";
 import SalesAgents from "../pages/SalesAgents";
 import Reports from "../pages/Reports";
 import EditLeads from "../components/EditLeads";
+import AddSalesAgent from "../pages/AddSalesAgent";
 function AppRoutes() {
   return (
     <BrowserRouter>
@@ -19,6 +20,7 @@ function AppRoutes() {
           <Route path="add-lead" element={<AddLead />} />
           <Route path="agents" element={<SalesAgents />} />
           <Route path="reports" element={<Reports />} />
+          <Route path ="add-agents" element = {< AddSalesAgent/>} />
         </Route>
       </Routes>
     </BrowserRouter>

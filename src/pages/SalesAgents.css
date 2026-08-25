@@ -33,8 +33,20 @@
   background: #2563eb;
   color: #ffffff;
   font-weight: 700;
-  cursor: not-allowed;
-  opacity: 0.62;
+  cursor: pointer;
+  box-shadow: 0 6px 14px rgba(37, 99, 235, 0.2);
+  transition: background 0.2s ease, box-shadow 0.2s ease, transform 0.2s ease;
+}
+
+.add-agent-button:hover {
+  background: #1d4ed8;
+  box-shadow: 0 9px 18px rgba(37, 99, 235, 0.28);
+  transform: translateY(-1px);
+}
+
+.add-agent-button:focus-visible {
+  outline: 3px solid #bfdbfe;
+  outline-offset: 2px;
 }
 
 .sales-agents-card {

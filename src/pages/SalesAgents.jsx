@@ -1,8 +1,10 @@
 import { useEffect, useState } from "react";
 import { getSalesAgents } from "../api/salesAgentApi";
+import { useNavigate } from "react-router-dom";
 import "./SalesAgents.css";
 
 const SalesAgents = () => {
+  const navigate = useNavigate();
   const [error, setError] = useState("");
   const [agents, setAgents] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -37,7 +39,11 @@ const SalesAgents = () => {
             Keep track of your sales team and their contact details.
           </p>
         </div>
-        <button className="add-agent-button" type="button" disabled>
+        <button
+          className="add-agent-button"
+          type="button"
+          onClick={() => navigate("/add-agents")}
+        >
           Add New Agent
         </button>
       </header>
