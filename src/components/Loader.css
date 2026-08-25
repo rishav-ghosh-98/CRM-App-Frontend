@@ -9,6 +9,12 @@
   font-weight: 700;
 }
 
+.reports-page > .loader,
+.leads-page > .loader {
+  display: flex;
+  min-height: 240px;
+}
+
 .loader-spinner {
   width: 18px;
   height: 18px;

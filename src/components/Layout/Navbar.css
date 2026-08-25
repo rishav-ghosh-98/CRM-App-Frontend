@@ -1,24 +1,26 @@
 .navbar-custom {
-  min-height: 70px;
+  min-height: 76px;
   box-sizing: border-box;
-  background: white;
-  box-shadow: 0 2px 10px rgba(0,0,0,.08);
+  background: #ffffff;
+  border-bottom: 1px solid #e2e8f0;
+  box-shadow: 0 4px 18px rgba(15, 35, 63, 0.05);
   display: flex;
   align-items: center;
-  padding: 0 30px;
+  padding: 0 40px;
 }
 
 .navbar-custom h4 {
   width: min(1280px, 100%);
   margin: 0 auto;
   color: #111827;
-  font-size: 1.25rem;
+  font-size: 1.15rem;
+  letter-spacing: 0.01em;
 }
 
 @media (max-width: 700px) {
   .navbar-custom {
-    min-height: 58px;
-    padding: 0 16px;
+    min-height: 64px;
+    padding: 0 18px;
   }
 
   .navbar-custom h4 {
