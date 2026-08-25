@@ -3,6 +3,7 @@ import { useNavigate, useParams } from "react-router-dom";
 import { getLeadsById, updateLead } from "../api/leadApi";
 import { createSalesAgent, getSalesAgents } from "../api/salesAgentApi";
 import { FaArrowLeft } from "react-icons/fa";
+import Loader from "./Loader";
 
 const emptyForm = {
   name: "",
@@ -116,7 +117,7 @@ const EditLeads = () => {
   };
 
   if (isLoading) {
-    return <div className="leads-page"><p className="empty-leads">Loading lead...</p></div>;
+    return <div className="leads-page"><Loader /></div>;
   }
 
   if (loadError) {

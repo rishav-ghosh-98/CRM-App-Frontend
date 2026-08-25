@@ -1,6 +1,7 @@
 import { useNavigate } from "react-router-dom";
 import { useState } from "react";
 import { createSalesAgent } from "../api/salesAgentApi";
+import Loader from "../components/Loader";
 import "./AddSalesAgent.css";
 
 const AddSalesAgent = () => {
@@ -115,7 +116,7 @@ const AddSalesAgent = () => {
             Cancel
           </button>
           <button className="add-agent-submit-button" type="submit" disabled={isSubmitting}>
-            {isSubmitting ? "Adding Agent..." : "Add Agent"}
+            {isSubmitting ? <Loader /> : "Add Agent"}
           </button>
         </div>
       </form>

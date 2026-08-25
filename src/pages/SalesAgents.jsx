@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { getSalesAgents } from "../api/salesAgentApi";
 import { useNavigate } from "react-router-dom";
+import Loader from "../components/Loader";
 import "./SalesAgents.css";
 
 const SalesAgents = () => {
@@ -58,7 +59,7 @@ const SalesAgents = () => {
         </div>
         <div className="sales-agents-list" aria-live="polite">
           {loading ? (
-            <p className="empty-leads">Loading sales agents...</p>
+            <Loader />
           ) : agents.length ? (
             agents.map((agent) => (
               <div key={agent.id}>

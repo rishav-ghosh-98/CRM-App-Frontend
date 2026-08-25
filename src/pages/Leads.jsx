@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { useNavigate, useSearchParams } from "react-router-dom";
 import { getLeads } from "../api/leadApi";
 import { getSalesAgents } from "../api/salesAgentApi";
+import Loader from "../components/Loader";
 import "./Leads.css";
 
 const Leads = () => {
@@ -11,6 +12,7 @@ const Leads = () => {
   const [agents, setAgents] = useState([]);
   const [selectedAgent, setSelectedAgent] = useState("");
   const [sortBy, setSortBy] = useState("priority");
+  const [loading, setLoading] = useState(true);
   const statusOptions = [
     "New",
     "Contacted",
@@ -31,11 +33,16 @@ const Leads = () => {
         setAgents(agentsResponse.data.agents);
       } catch (err) {
         console.error("Failed to fetch data:", err);
+      } finally {
+        setLoading(false);
       }
     };
 
     fetchData();
   }, []);
+  if (loading) {
+    return <div className="leads-page"><Loader /></div>;
+  }
   const filteredLeads = leads.filter((lead) => {
     const matchesAgent =
       !selectedAgent || lead.salesAgent?._id === selectedAgent;

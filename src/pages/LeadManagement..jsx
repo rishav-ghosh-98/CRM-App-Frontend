@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { getLeadsById } from "../api/leadApi";
 import { FaArrowLeft } from "react-icons/fa";
+import Loader from "../components/Loader";
 import "./Leads.css";
 
 const LeadManagement = () => {
@@ -28,7 +29,7 @@ const LeadManagement = () => {
   }
 
   if (!lead) {
-    return <div className="leads-page"><p className="empty-leads">Loading lead...</p></div>;
+    return <div className="leads-page"><Loader /></div>;
   }
 
   return (

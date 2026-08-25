@@ -1,11 +1,13 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { getLeads } from "../api/leadApi";
+import Loader from "../components/Loader";
 import "./Dashboard.css";
 const Dashboard = () => {
   const navigate = useNavigate();
   const [leads, setLeads] = useState([]);
   const [error, setError] = useState("");
+  const [loading, setLoading] = useState(true);
   useEffect(() => {
     const fetchLeads = async () => {
       try {
@@ -13,6 +15,8 @@ const Dashboard = () => {
         setLeads(response.data);
       } catch (err) {
         setError(err.response?.data?.error || "Failed to fetch lead.");
+      } finally {
+        setLoading(false);
       }
     };
     fetchLeads();
@@ -23,6 +27,9 @@ const Dashboard = () => {
         <p className="empty-leads">{error}</p>
       </div>
     );
+  }
+  if (loading) {
+    return <div className="leads-page"><Loader /></div>;
   }
   const recentLeads = [...leads]
     .sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt))

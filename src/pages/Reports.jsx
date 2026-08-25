@@ -11,6 +11,8 @@ import {
   Tooltip,
 } from "chart.js";
 import { getLeads } from "../api/leadApi";
+import { getLastWeekReport } from "../api/reportApi";
+import Loader from "../components/Loader";
 import { FaArrowLeft } from "react-icons/fa";
 import "./Reports.css";
 
@@ -22,15 +24,40 @@ const chartColors = ["#2563eb", "#0891b2", "#059669", "#d97706", "#64748b"];
 const Reports = () => {
   const navigate = useNavigate();
   const [leads, setLeads] = useState([]);
+  const [lastWeekLeads, setLastWeekLeads] = useState([]);
   const [error, setError] = useState("");
+  const [lastWeekError, setLastWeekError] = useState("");
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     const fetchLeads = async () => {
       try {
-        const response = await getLeads();
-        setLeads(response.data);
+        const leadsResponse = await getLeads();
+        setLeads(leadsResponse.data);
       } catch (err) {
         setError(err.response?.data?.error || "Failed to fetch report data.");
+      }
+
+      try {
+        const lastWeekResponse = await getLastWeekReport();
+        setLastWeekLeads(
+          (Array.isArray(lastWeekResponse.data) ? lastWeekResponse.data : []).map(
+            (lead) => ({
+              ...lead,
+              id: lead.id || lead._id,
+              salesAgent:
+                typeof lead.salesAgent === "string"
+                  ? lead.salesAgent
+                  : lead.salesAgent?.name || null,
+            }),
+          ),
+        );
+      } catch (err) {
+        setLastWeekError(
+          err.response?.data?.error || "Failed to fetch last-week report.",
+        );
+      } finally {
+        setLoading(false);
       }
     };
 
@@ -64,6 +91,9 @@ const Reports = () => {
   if (error) {
     return <div className="reports-page"><p className="empty-leads">{error}</p></div>;
   }
+  if (loading) {
+    return <div className="reports-page"><Loader /></div>;
+  }
 
   return (
     <div className="reports-page">
@@ -78,6 +108,35 @@ const Reports = () => {
       </div>
 
       <div className="report-grid">
+        <section className="report-card report-card-wide last-week-report">
+          <div className="report-card-heading">
+            <div>
+              <p className="page-eyebrow">Recent wins</p>
+              <h2>Leads closed in the last 7 days</h2>
+            </div>
+            <strong>{lastWeekLeads.length} closed</strong>
+          </div>
+          {lastWeekError ? (
+            <p className="empty-leads">{lastWeekError}</p>
+          ) : lastWeekLeads.length ? (
+            <div className="last-week-list">
+              {lastWeekLeads.map((lead) => (
+                <div className="last-week-row" key={lead.id}>
+                  <div>
+                    <strong>{lead.name}</strong>
+                    <span>{lead.salesAgent || "Unassigned"}</span>
+                  </div>
+                  <time dateTime={lead.closedAt}>
+                    {new Date(lead.closedAt).toLocaleDateString()}
+                  </time>
+                </div>
+              ))}
+            </div>
+          ) : (
+            <p className="empty-leads">No leads were closed in the last 7 days.</p>
+          )}
+        </section>
+
         <section className="report-card report-card-wide">
           <div className="report-card-heading">
             <div>

@@ -39,6 +39,45 @@
   grid-column: 1 / -1;
 }
 
+.last-week-list {
+  display: grid;
+  gap: 10px;
+}
+
+.last-week-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 14px 16px;
+  border: 1px solid #e2e8f0;
+  border-radius: 10px;
+  background: #f8fafc;
+}
+
+.last-week-row > div {
+  display: grid;
+  gap: 3px;
+  min-width: 0;
+}
+
+.last-week-row strong {
+  overflow: hidden;
+  color: #0f172a;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.last-week-row span,
+.last-week-row time {
+  color: #64748b;
+  font-size: 0.85rem;
+}
+
+.last-week-row time {
+  flex: 0 0 auto;
+}
+
 .report-card-heading {
   display: flex;
   align-items: flex-start;
@@ -85,6 +124,12 @@
   }
 
   .report-card-heading {
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  .last-week-row {
+    align-items: flex-start;
     flex-direction: column;
     gap: 8px;
   }
