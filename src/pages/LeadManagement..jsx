@@ -122,7 +122,11 @@ const LeadManagement = () => {
               <span className={`detail-value priority-${lead.priority.toLowerCase()}`}>{lead.priority}</span>
             </div>
             <div className="detail-item">
-              <span className="detail-label">Time to close</span>
+              <span className="detail-label">Estimated time to close</span>
+              <span className="detail-value">{lead.timeToClose} days</span>
+            </div>
+            <div className="detail-item">
+              <span className="detail-label">Estimated close</span>
               <span className="detail-value">{lead.timeToClose} days</span>
             </div>
           </div>

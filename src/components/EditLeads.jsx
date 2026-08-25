@@ -103,7 +103,10 @@ const EditLeads = () => {
       }
 
       await updateLead(id, {
-        ...form,
+        name: form.name.trim(),
+        source: form.source,
+        status: form.status,
+        priority: form.priority,
         tags: form.tags.split(",").map((tag) => tag.trim()).filter(Boolean),
         timeToClose: Number(form.timeToClose),
         salesAgent,

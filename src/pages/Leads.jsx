@@ -10,7 +10,9 @@ const Leads = () => {
   const [searchParams, setSearchParams] = useSearchParams();
   const [leads, setLeads] = useState([]);
   const [agents, setAgents] = useState([]);
-  const [selectedAgent, setSelectedAgent] = useState("");
+  const [selectedAgent, setSelectedAgent] = useState(searchParams.get("salesAgent") || "");
+  const [selectedSource, setSelectedSource] = useState(searchParams.get("source") || "");
+  const [selectedTag, setSelectedTag] = useState(searchParams.get("tags") || "");
   const [sortBy, setSortBy] = useState("priority");
   const [loading, setLoading] = useState(true);
   const statusOptions = [
@@ -19,6 +21,14 @@ const Leads = () => {
     "Qualified",
     "Proposal Sent",
     "Closed",
+  ];
+  const sourceOptions = [
+    "Website",
+    "Referral",
+    "Cold Call",
+    "Advertisement",
+    "Email",
+    "Other",
   ];
   const [selectedStatus, setSelectedStatus] = useState(searchParams.get("status") || "");
   useEffect(() => {
@@ -48,9 +58,22 @@ const Leads = () => {
       !selectedAgent || lead.salesAgent?._id === selectedAgent;
 
     const matchesStatus = !selectedStatus || lead.status === selectedStatus;
+    const matchesSource = !selectedSource || lead.source === selectedSource;
+    const matchesTag = !selectedTag || lead.tags?.includes(selectedTag);
 
-    return matchesAgent && matchesStatus;
+    return matchesAgent && matchesStatus && matchesSource && matchesTag;
   });
+  const tagOptions = [...new Set(leads.flatMap((lead) => lead.tags || []))].sort();
+  const updateFilter = (name, value, setter) => {
+    setter(value);
+    const nextParams = new URLSearchParams(searchParams);
+    if (value) {
+      nextParams.set(name, value);
+    } else {
+      nextParams.delete(name);
+    }
+    setSearchParams(nextParams);
+  };
   const sortedLeads = [...filteredLeads].sort((a, b) => {
     if (sortBy === "priority") {
       const priorityOrder = {
@@ -99,13 +122,7 @@ const Leads = () => {
                   const value = e.target.value;
                   setSelectedStatus(value);
 
-                  const nextParams = new URLSearchParams(searchParams);
-                  if (value) {
-                    nextParams.set("status", value);
-                  } else {
-                    nextParams.delete("status");
-                  }
-                  setSearchParams(nextParams);
+                  updateFilter("status", value, setSelectedStatus);
                 }}
               >
                 <option value="">All statuses</option>
@@ -120,13 +137,37 @@ const Leads = () => {
               Sales Agent{" "}
               <select
                 value={selectedAgent}
-                onChange={(e) => setSelectedAgent(e.target.value)}
+                onChange={(e) => updateFilter("salesAgent", e.target.value, setSelectedAgent)}
               >
                 <option value="">All agents</option>
                 {agents.map((agent) => (
                   <option key={agent.id} value={agent.id}>
                     {agent.name}
                   </option>
+                ))}
+              </select>
+            </label>
+            <label>
+              Lead Source{" "}
+              <select
+                value={selectedSource}
+                onChange={(e) => updateFilter("source", e.target.value, setSelectedSource)}
+              >
+                <option value="">All sources</option>
+                {sourceOptions.map((source) => (
+                  <option key={source} value={source}>{source}</option>
+                ))}
+              </select>
+            </label>
+            <label>
+              Tags{" "}
+              <select
+                value={selectedTag}
+                onChange={(e) => updateFilter("tags", e.target.value, setSelectedTag)}
+              >
+                <option value="">All tags</option>
+                {tagOptions.map((tag) => (
+                  <option key={tag} value={tag}>{tag}</option>
                 ))}
               </select>
             </label>
@@ -156,6 +197,11 @@ const Leads = () => {
                     {lead.status}
                   </span>
                   <span>{lead.salesAgent?.name || "Unassigned"}</span>
+                  <span className="lead-tags">
+                    {lead.tags?.length ? lead.tags.map((tag) => (
+                      <span className="lead-tag" key={tag}>{tag}</span>
+                    )) : <span className="lead-tag-empty">No tags</span>}
+                  </span>
                 </button>
               ))
             ) : (

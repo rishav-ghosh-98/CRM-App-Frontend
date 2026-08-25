@@ -130,7 +130,7 @@
 
 .lead-row {
   display: grid;
-  grid-template-columns: minmax(150px, 1fr) 150px minmax(120px, 0.8fr);
+  grid-template-columns: minmax(150px, 1fr) 150px minmax(120px, 0.8fr) minmax(120px, 1fr);
   align-items: center;
   gap: 16px;
   width: 100%;
@@ -141,6 +141,28 @@
   background: #ffffff;
   color: #334155;
   cursor: pointer;
+}
+
+.lead-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 5px;
+}
+
+.lead-tag,
+.lead-tag-empty {
+  width: fit-content;
+  border-radius: 999px;
+  padding: 4px 8px;
+  background: #eaf2ff;
+  color: #1d4ed8;
+  font-size: 0.72rem;
+  font-weight: 800;
+}
+
+.lead-tag-empty {
+  background: #f1f5f9;
+  color: #94a3b8;
 }
 
 .lead-row:hover {
@@ -198,6 +220,10 @@
   .lead-row {
     grid-template-columns: 1fr;
     gap: 8px;
+  }
+
+  .lead-tags {
+    margin-top: 2px;
   }
 }
 

@@ -11,7 +11,11 @@ body {
 .layout-body {
   display: flex;
   width: 100%;
-  min-height: calc(100svh - 70px);
+  min-height: calc(100svh - 76px);
+}
+
+.sidebar-backdrop {
+  display: none;
 }
 
 .main-content {
@@ -43,6 +47,16 @@ body {
   .layout-body {
     flex-direction: column;
     min-height: 0;
+  }
+
+  .sidebar-backdrop {
+    position: fixed;
+    z-index: 10;
+    inset: 64px 0 0;
+    display: block;
+    border: 0;
+    background: rgba(16, 35, 63, 0.35);
+    cursor: pointer;
   }
 
   .page-content {
