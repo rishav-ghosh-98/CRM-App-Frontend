@@ -184,26 +184,34 @@ const Leads = () => {
           </div>
           <div className="lead-list">
             {sortedLeads.length ? (
-              sortedLeads.map((lead) => (
-                <button
-                  className="lead-row"
-                  key={lead._id}
-                  onClick={() => navigate(`/leads/${lead._id}`)}
-                >
-                  <strong>{lead.name}</strong>
-                  <span
-                    className={`status status-${lead.status.toLowerCase().replaceAll(" ", "-")}`}
+              <>
+                <div className="lead-list-header" aria-hidden="true">
+                  <span>Lead</span>
+                  <span>Status</span>
+                  <span>Sales agent</span>
+                  <span>Tags</span>
+                </div>
+                {sortedLeads.map((lead) => (
+                  <button
+                    className="lead-row"
+                    key={lead._id}
+                    onClick={() => navigate(`/leads/${lead._id}`)}
                   >
-                    {lead.status}
-                  </span>
-                  <span>{lead.salesAgent?.name || "Unassigned"}</span>
-                  <span className="lead-tags">
-                    {lead.tags?.length ? lead.tags.map((tag) => (
-                      <span className="lead-tag" key={tag}>{tag}</span>
-                    )) : <span className="lead-tag-empty">No tags</span>}
-                  </span>
-                </button>
-              ))
+                    <strong>{lead.name}</strong>
+                    <span
+                      className={`status status-${lead.status.toLowerCase().replaceAll(" ", "-")}`}
+                    >
+                      {lead.status}
+                    </span>
+                    <span>{lead.salesAgent?.name || "Unassigned"}</span>
+                    <span className="lead-tags">
+                      {lead.tags?.length ? lead.tags.map((tag) => (
+                        <span className="lead-tag" key={tag}>{tag}</span>
+                      )) : <span className="lead-tag-empty">No tags</span>}
+                    </span>
+                  </button>
+                ))}
+              </>
             ) : (
               <p className="empty-leads">No leads found.</p>
             )}

@@ -126,8 +126,12 @@ const LeadManagement = () => {
               <span className="detail-value">{lead.timeToClose} days</span>
             </div>
             <div className="detail-item">
-              <span className="detail-label">Estimated close</span>
-              <span className="detail-value">{lead.timeToClose} days</span>
+              <span className="detail-label">Tags</span>
+              <span className="lead-tags detail-tags">
+                {lead.tags?.length ? lead.tags.map((tag) => (
+                  <span className="lead-tag" key={tag}>{tag}</span>
+                )) : <span className="lead-tag-empty">No tags</span>}
+              </span>
             </div>
           </div>
 
