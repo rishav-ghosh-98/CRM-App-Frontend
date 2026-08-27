@@ -1,16 +1,59 @@
-# React + Vite
+# Anvaya CRM Frontend
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Anvaya CRM is a React-based customer relationship management dashboard for organizing leads, assigning them to sales agents, and monitoring sales activity through a connected backend API.
 
-Currently, two official plugins are available:
+## What I Built
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+- A dashboard showing total leads, active leads, recent closures, lead status, and leads grouped by sales agent.
+- A lead overview page with filtering by status, sales agent, source, and tags.
+- Lead sorting by priority and estimated time to close.
+- Lead detail and edit workflows, plus a form for adding new leads.
+- Sales agent management with a form for adding agents.
+- Reports with pipeline totals, recently closed leads, lead distribution, and Chart.js visualizations.
+- Loading and error states for API requests, with responsive styling for the main CRM screens.
 
-## React Compiler
+## Tech Stack
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+- React 19 and React Router
+- Vite
+- Axios for API requests
+- Bootstrap and custom CSS
+- Chart.js with `react-chartjs-2`
+- React Icons
 
-## Expanding the ESLint configuration
+## Project Structure
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+```text
+Crm_App/
+├── public/
+├── src/
+│   ├── api/
+│   ├── components/
+│   ├── pages/
+│   └── routes/
+├── index.html
+├── package.json
+└── vite.config.js
+```
+
+## Running the Frontend
+
+From the `Frontend/Crm_App` directory, install dependencies and start the development server:
+
+```bash
+npm install
+npm run dev
+```
+
+Open the local URL shown by Vite in your browser. The frontend expects the backend API to be running so that leads, agents, and report data can be loaded.
+
+## Available Commands
+
+```bash
+npm run dev       # Start the development server
+npm run build     # Create a production build
+npm run lint      # Check the frontend source code
+npm run preview   # Preview the production build
+```
+
+For backend setup and API endpoint details, see [Backend/README.md](../../Backend/README.md).
